@@ -1,4 +1,4 @@
-package com.hulkhiretech.payments.controller;
+package com.hulkhiretech.payment.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

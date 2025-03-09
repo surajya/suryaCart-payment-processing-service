@@ -1,4 +1,4 @@
-package com.hulkhiretech.payments;
+package com.hulkhiretech.payment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
