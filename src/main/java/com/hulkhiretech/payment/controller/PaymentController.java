@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hulkhiretech.payment.dto.TransactionsDTO;
+import com.hulkhiretech.payment.constant.TransactionStatusEnum;
+import com.hulkhiretech.payment.dto.TransactionDTO;
 import com.hulkhiretech.payment.pojo.CreatePaymentRequest;
 import com.hulkhiretech.payment.pojo.CreatePaymentResponse;
 import com.hulkhiretech.payment.service.interfaces.PaymentService;
@@ -36,7 +37,7 @@ public class PaymentController {
 		log.info("create payment controller, CreatePaymentRequest: " + createPaymentRequest);
 		
 		//Convert pojo into DTO class
-		TransactionsDTO txnDTO = modelMapper.map(createPaymentRequest, TransactionsDTO.class);
+		TransactionDTO txnDTO = modelMapper.map(createPaymentRequest, TransactionDTO.class);
 		log.info("DTO created successfully :"+txnDTO);
 		
 		String createPayment = paymentService.CreatePayment(txnDTO);
@@ -54,6 +55,10 @@ public class PaymentController {
 	@PostMapping(value ="/{txnReference}/initiate")
 	public ResponseEntity<String> initiatePayment(@PathVariable String txnReference){
 		log.info("payments initiated of txnReference: " + txnReference);
+		
+		
+		String initiatePayment = paymentService.InitiatePayment();
+		
 		return new ResponseEntity<>("initiate payment successfully",HttpStatus.OK);
 	}
 }

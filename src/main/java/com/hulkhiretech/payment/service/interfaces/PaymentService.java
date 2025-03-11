@@ -1,9 +1,9 @@
 package com.hulkhiretech.payment.service.interfaces;
 
-import com.hulkhiretech.payment.dto.TransactionsDTO;
+import com.hulkhiretech.payment.dto.TransactionDTO;
 
 public interface PaymentService {
-	public String CreatePayment(TransactionsDTO transactionDTO);
+	public String CreatePayment(TransactionDTO transactionDTO);
 	
 	public String InitiatePayment();
 }
