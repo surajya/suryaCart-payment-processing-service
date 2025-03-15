@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hulkhiretech.payment.constant.TransactionStatusEnum;
+import com.hulkhiretech.payment.dto.InitiatePaymentDTO;
 import com.hulkhiretech.payment.dto.TransactionDTO;
 import com.hulkhiretech.payment.pojo.CreatePaymentRequest;
 import com.hulkhiretech.payment.pojo.CreatePaymentResponse;
+import com.hulkhiretech.payment.pojo.InitPaymentResponse;
+import com.hulkhiretech.payment.pojo.InitiatePaymentReq;
 import com.hulkhiretech.payment.service.interfaces.PaymentService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,25 +42,35 @@ public class PaymentController {
 		TransactionDTO txnDTO = modelMapper.map(createPaymentRequest, TransactionDTO.class);
 		log.info("DTO created successfully :"+txnDTO);
 		
-		String createPayment = paymentService.CreatePayment(txnDTO);
+		TransactionDTO transactionDTO = paymentService.CreatePayment(txnDTO);
 		
 		
 		//TODO This response is hardcoded ! it temporarily
-		CreatePaymentResponse createPaymentresponse = new CreatePaymentResponse();
-		createPaymentresponse.setTxnReference("TXN001324");
-		log.info("Controller || create payment transaction: "+createPaymentresponse.getTxnReference()+" | createPayment: "+createPayment);
-		log.info("Controller||create payment transaction:{}|createPayment:{} ",createPaymentresponse.getTxnReference(), createPayment);
+		CreatePaymentResponse createPaymentResponse = new CreatePaymentResponse();
+		createPaymentResponse.setTxnReference(transactionDTO.getTxnReference());
+		createPaymentResponse.setTxnStatus(transactionDTO.getTxnStatus());
+		log.info("Controller || create payment transaction: "+createPaymentResponse.getTxnReference()+" | createPayment: "+createPaymentResponse);
+		log.info("Controller||create payment transaction:{}|createPayment:{} ",createPaymentResponse.getTxnReference(), createPaymentResponse);
 		
-		return new ResponseEntity<>(createPaymentresponse,HttpStatus.CREATED);
+		return new ResponseEntity<>(createPaymentResponse,HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value ="/{txnReference}/initiate")
-	public ResponseEntity<String> initiatePayment(@PathVariable String txnReference){
-		log.info("payments initiated of txnReference: " + txnReference);
+	public ResponseEntity<InitPaymentResponse> initiatePayment(@PathVariable String txnReference, @RequestBody InitiatePaymentReq initiatePaymentReq){
+		log.info("Payment status fetched successfully||txnReference:{}|initiatePaymentReq:{}", 
+				txnReference, initiatePaymentReq);
 		
+		InitiatePaymentDTO reqDto = modelMapper.map(initiatePaymentReq, InitiatePaymentDTO.class);
 		
-		String initiatePayment = paymentService.InitiatePayment();
+		TransactionDTO responseDTO = paymentService.InitiatePayment(txnReference, reqDto);
 		
-		return new ResponseEntity<>("initiate payment successfully",HttpStatus.OK);
+		InitPaymentResponse response = InitPaymentResponse.builder()
+				.txnReference(responseDTO.getTxnReference())
+				.txnStatus(responseDTO.getTxnStatus())
+				.url(responseDTO.getUrl())
+				.build();
+		log.info("Retunring response:{}", response);
+		
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 }

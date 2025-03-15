@@ -1,9 +1,12 @@
 package com.hulkhiretech.payment.pojo;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class CreatePaymentResponse {
+@Builder
+public class InitPaymentResponse {
 	private String txnReference;
 	private String txnStatus;
+	private String url;
 }

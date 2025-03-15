@@ -4,22 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.hulkhiretech.payment.constant.Constants;
+import com.hulkhiretech.payment.constant.ErrorCodeEnum;
 import com.hulkhiretech.payment.constant.TransactionStatusEnum;
+import com.hulkhiretech.payment.dao.interfaces.TransactionDao;
+import com.hulkhiretech.payment.dto.InitiatePaymentDTO;
+import com.hulkhiretech.payment.dto.PaymentResDTO;
 import com.hulkhiretech.payment.dto.TransactionDTO;
+import com.hulkhiretech.payment.exception.ProcessingException;
 import com.hulkhiretech.payment.http.HttpRequest;
 import com.hulkhiretech.payment.http.HttpServiceEngine;
-import com.hulkhiretech.payment.pojo.CreatePaymentRequest;
 import com.hulkhiretech.payment.service.interfaces.PaymentService;
 import com.hulkhiretech.payment.service.interfaces.PaymentStatusService;
 import com.hulkhiretech.payment.stripeprovider.CreatePaymentReq;
 import com.hulkhiretech.payment.stripeprovider.LineItems;
+import com.hulkhiretech.payment.stripeprovider.PaymentRes;
+import com.hulkhiretech.payment.stripeprovider.SPErrorResponse;
+import com.hulkhiretech.payment.util.GsonUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +44,15 @@ public class PaymentServiceImpl implements PaymentService{
 	private final HttpServiceEngine httpServiceEngine;
 	private final Gson gson;
 	
-
+	private final TransactionDao transactionDao;
+	private final ModelMapper modelMapper;
+	private final GsonUtils gsonUtils;
+	
+	@Value("${stripe.provider.create.payment.url}")
+	private String stripeProviderCreatePaymentUrl;
+	
 	@Override
-	public String CreatePayment(TransactionDTO transactionDTO) {
+	public TransactionDTO CreatePayment(TransactionDTO transactionDTO) {
 		// TODO Auto-generated method stre
 		
 		//Make complete transactiondto first
@@ -45,14 +62,11 @@ public class PaymentServiceImpl implements PaymentService{
 		
 		
 		//Logic to save transactionDTO in DB with status: Created;
-		paymentStatusService.processStatus(transactionDTO);
+		TransactionDTO txnDTO = paymentStatusService.processStatus(transactionDTO);
 		
-		//prepare needed to save txn to DB
 		
-		//Add repository / dto layer & call methods here
-		
-		log.info("PaymentServiceImpl.CreatePayment");
-		return "return from PaymentServiceImpl.CreatePayment";
+		log.info("PaymentServiceImpl.CreatePayment transaction dto: " + txnDTO);
+		return txnDTO;
 	}
 
 	public String getTransactionReference() {
@@ -62,15 +76,20 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public String InitiatePayment() {
-		// TODO Auto-generated method stub
+	public TransactionDTO InitiatePayment(String txnReference, InitiatePaymentDTO reqDto) {
+		log.info("Initiating payment txnReference:{}|reqDto:{}",
+				txnReference, reqDto);
+
+		// Load Txn from DB based on txnReference.
+		TransactionDTO txnDTO = transactionDao.getTransactionByReference(txnReference);
+		log.info("txnDto from DB:" + txnDTO);
 		
-		
-		TransactionDTO txnDTO = new TransactionDTO();
-		//update db with intiated statuse
-		//make api call to stripe provider service
-		//if success response then staus pending
-		//if failure response then staus failed
+		if(txnDTO == null) {
+			throw new ProcessingException(
+					ErrorCodeEnum.INVALID_TXN_REFERENCE.getErrorCode(), 
+					ErrorCodeEnum.INVALID_TXN_REFERENCE.getErrorMessage(),
+					HttpStatus.BAD_REQUEST);
+		}
 		
 		txnDTO.setTxnStatus(TransactionStatusEnum.INITIATED.getName());
 		paymentStatusService.processStatus(txnDTO);
@@ -80,24 +99,75 @@ public class PaymentServiceImpl implements PaymentService{
 		HttpRequest httpRequest = prepareHttpCall();
 		log.info("Prepared http request, now http call->: {}", httpRequest);
 		
-		ResponseEntity<String> httpResponse = httpServiceEngine.makeHttpCall(httpRequest);
-		log.info("response from stripe-service-provider || httpresponse: {}", httpResponse);
+		try {
+			// Make API call to stripe provider service. RestClient
+			ResponseEntity<String> httpResponse = httpServiceEngine.makeHttpCall(httpRequest);
+			
+			PaymentResDTO paymentResponse = processResponse(httpResponse);
+			
+			//success update to PENDING
+			txnDTO.setTxnStatus(TransactionStatusEnum.PENDING.getName());
+			txnDTO.setProviderReference(paymentResponse.getId());
+			txnDTO.setUrl(paymentResponse.getUrl());
+			paymentStatusService.processStatus(txnDTO);
+			log.info("Successfully got url & updated in DB:" + txnDTO);
+
+			return txnDTO;
+		} catch (ProcessingException e) {
+			// FAILED update to FAILED
+			
+			txnDTO.setTxnStatus(TransactionStatusEnum.FAILED.getName());
+			txnDTO.setErrorCode(e.getErrorCode());
+			txnDTO.setErrorMessage(e.getErrorMessage());
+			paymentStatusService.processStatus(txnDTO);
+			
+			if(e.getErrorCode().equals(Constants.STRIPE_PSP_ERROR)) {
+				log.error("Got error with StripePSP, so returning standard error to invoker");
+				throw new ProcessingException(
+						ErrorCodeEnum.ERROR_AT_STRIPE_PSP.getErrorCode(), 
+						ErrorCodeEnum.ERROR_AT_STRIPE_PSP.getErrorMessage(), 
+						e.getHttpStatus());
+			}
+			
+			throw e;// re-throwing exception for error response.
+		}
 		
-		//PENDING update payment
-		txnDTO.setTxnStatus(TransactionStatusEnum.PENDING.getName());
-		txnDTO.setProviderReference("From stripe provider service");
-		paymentStatusService.processStatus(txnDTO);
-		
-		//Failed to update payment
-		txnDTO.setTxnStatus(TransactionStatusEnum.PENDING.getName());
-		txnDTO.setProviderReference("From stripe provider service");
-		txnDTO.setErrorCode("stripe provider service error code");
-		txnDTO.setErrorMessage("stripe provider service error message");
-		paymentStatusService.processStatus(txnDTO);
-		
-		return null;
 	}
 
+	private PaymentResDTO processResponse(ResponseEntity<String> httpResponse) {
+		if(httpResponse.getStatusCode().isSameCodeAs(HttpStatus.CREATED)) {
+			// convert to success PaymentRes object. 
+			
+			PaymentRes spPaymentRes = gsonUtils.fromJson(httpResponse.getBody(), PaymentRes.class);
+			log.info("Converted to PaymentRes:" + spPaymentRes);
+
+			if (spPaymentRes != null && spPaymentRes.getUrl() != null) {
+				PaymentResDTO paymentResDTO = modelMapper.map(spPaymentRes, PaymentResDTO.class);
+				log.info("Converted PaymentRes to PaymentResDTO:" + paymentResDTO);
+				return paymentResDTO;
+			}
+			log.error("GOT 201 but no url in response.");
+		}
+		
+		// convert to error object.
+		SPErrorResponse errorResponse = gsonUtils.fromJson(httpResponse.getBody(), SPErrorResponse.class);
+		log.error("Converted to SPErrorResponse:" + errorResponse);
+		
+		if (errorResponse != null && errorResponse.getErrorCode() != null) {
+			throw new ProcessingException(
+					errorResponse.getErrorCode(), 
+					errorResponse.getErrorMessage(), 
+					HttpStatus.valueOf(httpResponse.getStatusCode().value()));
+		}
+		
+		log.error("Raising Generic error. Unable to get valid error object structure");
+		throw new ProcessingException(
+				ErrorCodeEnum.GENERIC_ERROR.getErrorCode(), 
+				ErrorCodeEnum.GENERIC_ERROR.getErrorMessage(), 
+				HttpStatus.INTERNAL_SERVER_ERROR);
+
+	}
+	
 	public HttpRequest prepareHttpCall() {
 		HttpHeaders httpHeaders=new HttpHeaders();
 		httpHeaders.add(httpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -121,13 +191,13 @@ public class PaymentServiceImpl implements PaymentService{
 		createPaymentReq.setLineItem(lineItems);
 		
 		//Object requestBody=null ;
-		HttpRequest httpRequest=HttpRequest.builder()
+		return HttpRequest.builder()
 							.method(HttpMethod.POST)
 						    .url("http://localhost:8083/v1/payments")
 						    .headers(httpHeaders)
 						    .requestBody(gson.toJson(createPaymentReq))
 						    .build();
-		return httpRequest;
+		
 	}
 
 }
