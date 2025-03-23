@@ -30,21 +30,23 @@
 			<properties>
 				<spring.profiles.active>local</spring.profiles.active>
 				<log4j2.path>
-					D:\\ctws\\feb25ct\\logs\\payment-processing-service001</log4j2.path>
+					D:\\JAVA\\JavaInternshipPayment\\ctws\\25FebCT\\logs\\payment-processing-service001</log4j2.path>
 			</properties>
 		</profile>
 		<profile>
 			<id>dev</id>
 			<properties>
 				<spring.profiles.active>dev</spring.profiles.active>
-				<log4j2.path>/var/lib/tomcat/logs/cpt/payment-processing-service001</log4j2.path>
+				<log4j2.path>
+					/var/lib/tomcat/logs/cpt/payment-processing-service001</log4j2.path>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
 				<spring.profiles.active>prod</spring.profiles.active>
-				<log4j2.path>/var/lib/tomcat/logs/cpt/payment-processing-service001</log4j2.path>
+				<log4j2.path>
+					/var/lib/tomcat/logs/cpt/payment-processing-service001</log4j2.path>
 			</properties>
 		</profile>
 	</profiles>
@@ -57,7 +59,7 @@
 	</parent>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -68,31 +70,32 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+
+		<!--
+		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-devtools</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <scope>provided</scope>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 		<dependency>
-		    <groupId>org.modelmapper</groupId>
-		    <artifactId>modelmapper</artifactId>
-		    <version>3.2.1</version>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.1</version>
 		</dependency>
 
 		<dependency>
@@ -104,18 +107,18 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<dependency>
-        <groupId>com.zaxxer</groupId>
-        <artifactId>HikariCP</artifactId>
-    </dependency>
-		
-		
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+
+
 		<!--spring cloud-->
 		<dependency>
-	        <groupId>org.springframework.cloud</groupId>
-<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-	    </dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+		</dependency>
 		<!-- Spring Boot Actuator (for monitoring) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -126,24 +129,41 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+		<!-- Stripe java dependency-->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>28.4.0</version>
+		</dependency>
 
-		
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-activemq</artifactId>
+		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2024.0.0</version> <!-- Correct version for Spring Boot 3.4.x -->
+				<version>2024.0.0</version> <!-- Correct version for Spring Boot
+				3.4.x -->
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
-	
-	
 
 	<build>
 		<finalName>payment-processing-service</finalName>
@@ -163,10 +183,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-			        <compilerArgs>
-			            <arg>-Xlint:-options</arg>
-			        </compilerArgs>
-			    </configuration>
+					<compilerArgs>
+						<arg>-Xlint:-options</arg>
+					</compilerArgs>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -186,17 +206,17 @@
 		</plugins>
 	</build>
 
-	<url/>
+	<url />
 	<licenses>
-		<license/>
+		<license />
 	</licenses>
 	<developers>
-		<developer/>
+		<developer />
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
 	</scm>
 </project>

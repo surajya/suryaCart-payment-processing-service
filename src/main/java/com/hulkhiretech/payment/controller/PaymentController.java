@@ -60,6 +60,13 @@ public class PaymentController {
 		log.info("Payment status fetched successfully||txnReference:{}|initiatePaymentReq:{}", 
 				txnReference, initiatePaymentReq);
 		
+		
+		log.trace("TRACE method of logger");
+		log.debug("DEBUG method of logger");
+		log.info("INFO method of logger");
+		log.error("ERROR method of logger");
+		log.warn("warn method of logger");
+		
 		InitiatePaymentDTO reqDto = modelMapper.map(initiatePaymentReq, InitiatePaymentDTO.class);
 		
 		TransactionDTO responseDTO = paymentService.InitiatePayment(txnReference, reqDto);

@@ -9,4 +9,8 @@ public interface TransactionDao {
 	public abstract TransactionDTO getTransactionByReference(String txnReference);
 
 	public abstract TransactionDTO updateTransactionStatusDetails(TransactionDTO txnDto);
+
+	public abstract TransactionDTO getTransactionByProviderReference(String providerReference);
+
+
 }
