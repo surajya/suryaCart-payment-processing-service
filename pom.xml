@@ -145,10 +145,18 @@
 			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
 
+		 <!-- Spring Boot Starter for JMS -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
 		</dependency>
+		
+		<!-- ActiveMQ Client -->
+		<dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-broker</artifactId>
+    </dependency>
+		
 	</dependencies>
 
 	<dependencyManagement>
