@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hulkhiretech.payments</groupId>
-	<artifactId>payment-processing-service001</artifactId>
+	<artifactId>payment-processing-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>payment-processing-service001</name>
-	<description>payment processing service001</description>
+	<name>payment-processing-service</name>
+	<description>payment processing service</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,7 +30,7 @@
 			<properties>
 				<spring.profiles.active>local</spring.profiles.active>
 				<log4j2.path>
-					D:\\JAVA\\JavaInternshipPayment\\ctws\\25FebCT\\logs\\payment-processing-service001</log4j2.path>
+					D:\\JAVA\\JavaInternshipPayment\\ctws\\25FebCT\\logs\\payment-processing-service</log4j2.path>
 			</properties>
 		</profile>
 		<profile>
@@ -38,7 +38,7 @@
 			<properties>
 				<spring.profiles.active>dev</spring.profiles.active>
 				<log4j2.path>
-					/var/lib/tomcat/logs/cpt/payment-processing-service001</log4j2.path>
+					/var/lib/tomcat/logs/cpt/payment-processing-service</log4j2.path>
 			</properties>
 		</profile>
 		<profile>
@@ -46,7 +46,7 @@
 			<properties>
 				<spring.profiles.active>prod</spring.profiles.active>
 				<log4j2.path>
-					/var/lib/tomcat/logs/cpt/payment-processing-service001</log4j2.path>
+					/var/lib/tomcat/logs/cpt/payment-processing-service</log4j2.path>
 			</properties>
 		</profile>
 	</profiles>
