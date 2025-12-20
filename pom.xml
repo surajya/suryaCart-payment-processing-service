@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hulkhiretech.payments</groupId>
-	<artifactId>payment-processing-service</artifactId>
+	<artifactId>suryaCart-payment-processing-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>payment-processing-service</name>
+	<name>suryaCart-payment-processing-service</name>
 	<description>payment processing service</description>
 
 	<properties>
