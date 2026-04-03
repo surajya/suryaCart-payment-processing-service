@@ -8,19 +8,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>suryaCart-payment-processing-service</name>
 	<description>payment processing service</description>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<spring.application.name>payment-processing-service001</spring.application.name>
+		<spring.application.name>suryaCart-payment-processing-service</spring.application.name>
 		<junit.jupiter.version>5.8.1</junit.jupiter.version>
 		<junit.platform.version>1.8.1</junit.platform.version>
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 	</properties>
-
 	<profiles>
 		<profile>
 			<id>local</id>
@@ -50,54 +48,44 @@
 			</properties>
 		</profile>
 	</profiles>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!--
-		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+		<!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>3.2.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -107,13 +95,10 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 		</dependency>
-
-
 		<!--spring cloud-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -144,28 +129,23 @@
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
-
-		 <!-- Spring Boot Starter for JMS -->
+		<!-- Spring Boot Starter for JMS -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
 		</dependency>
-		
 		<!-- ActiveMQ Client -->
 		<dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-broker</artifactId>
-    </dependency>
-		 
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-broker</artifactId>
+		</dependency>
 		<!--AWS Secret manager-->
 		<dependency>
 			<groupId>io.awspring.cloud</groupId>
 			<artifactId>spring-cloud-starter-aws-secrets-manager-config</artifactId>
 			<version>2.4.2</version>
 		</dependency>
-		
 	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -178,8 +158,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-
 	<build>
 		<finalName>payment-processing-service</finalName>
 		<resources>
@@ -220,7 +198,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<url />
 	<licenses>
 		<license />
