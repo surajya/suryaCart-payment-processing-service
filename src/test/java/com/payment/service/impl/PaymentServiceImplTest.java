@@ -1,4 +1,4 @@
-package com.hulkhiretech.payment.service.impl;
+package com.payment.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
