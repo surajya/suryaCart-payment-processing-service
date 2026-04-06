@@ -35,12 +35,12 @@ public class TransactionDaoImpl implements TransactionDao {
 		log.info("Convert transaction dto into transaction ENTITY :" + txnEntity);
 
 		String sql = "INSERT INTO payments.transactions " +
-				"(userId, paymentMethodId, providerId, paymentTypeId, txnStatusId, amount, currency, merchantTxnReference, txnReference,"
+				"(user_id, payment_method_id, provider_id, payment_type_id, txn_status_id, amount, currency, merchant_txn_reference, txn_reference, "
 				+
-				" providerReference, errorCode, errorMessage, retryCount) " +
-				"VALUES (:userId, :paymentMethodId, :providerId, :paymentTypeId, :txnStatusId, :amount, :currency, :merchantTxnReference,"
+				"provider_reference, error_code, error_message, retry_count) " +
+				"VALUES (:userId, :paymentMethodId, :providerId, :paymentTypeId, :txnStatusId, :amount, :currency, :merchantTxnReference, "
 				+
-				" :txnReference, :providerReference, :errorCode, :errorMessage, :retryCount)";
+				":txnReference, :providerReference, :errorCode, :errorMessage, :retryCount)";
 
 		SqlParameterSource params = new BeanPropertySqlParameterSource(txnEntity);
 
@@ -61,7 +61,7 @@ public class TransactionDaoImpl implements TransactionDao {
 	public TransactionDTO getTransactionByReference(String txnReference) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM payments.transactions "
-				+ "WHERE txnReference = :txnReference";
+				+ "WHERE txn_Reference = :txnReference";
 
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("txnReference", txnReference);
@@ -86,10 +86,10 @@ public class TransactionDaoImpl implements TransactionDao {
 
 	@Override
 	public TransactionDTO updateTransactionStatusDetails(TransactionDTO txnDto) {
-		String sql = "UPDATE payments.transactions "
-				+ "SET txnStatusId = :txnStatusId, providerReference = :providerReference, "
-				+ "errorCode = :errorCode, errorMessage = :errorMessage "
-				+ "WHERE txnReference = :txnReference";
+		String sql = "UPDATE payments.transactions " +
+				"SET txn_status_id = :txnStatusId, provider_reference = :providerReference, " +
+				"error_code = :errorCode, error_message = :errorMessage " +
+				"WHERE txn_reference = :txnReference";
 
 		TransactionsEntity transaction = mapper.map(txnDto, TransactionsEntity.class);
 		SqlParameterSource params = new BeanPropertySqlParameterSource(transaction);
@@ -105,7 +105,7 @@ public class TransactionDaoImpl implements TransactionDao {
 	public TransactionDTO getTransactionByProviderReference(String providerReference) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM payments.transactions "
-				+ "WHERE providerReference = :providerReference";
+				+ "WHERE provider_Reference = :providerReference";
 
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("providerReference", providerReference);
