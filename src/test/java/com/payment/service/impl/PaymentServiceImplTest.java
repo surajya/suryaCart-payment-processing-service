@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import com.google.gson.Gson;
 import com.payment.constant.ErrorCodeEnum;
 import com.payment.constant.TransactionStatusEnum;
-import com.payment.dao.interfaces.TransactionDao;
+import com.payment.dao.TransactionDao;
 import com.payment.dto.InitiatePaymentDTO;
 import com.payment.dto.PaymentResDTO;
 import com.payment.dto.TransactionDTO;

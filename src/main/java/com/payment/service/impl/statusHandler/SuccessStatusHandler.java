@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.payment.dao.interfaces.TransactionDao;
+import com.payment.dao.TransactionDao;
 import com.payment.dto.TransactionDTO;
 import com.payment.pojo.activemq.StatusMessage;
 import com.payment.service.interfaces.TransactionStatusHandler;

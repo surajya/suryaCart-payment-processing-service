@@ -10,7 +10,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.payment.dao.interfaces.TransactionDao;
+import com.payment.dao.TransactionDao;
 import com.payment.dto.TransactionDTO;
 import com.payment.entity.TransactionsEntity;
 
