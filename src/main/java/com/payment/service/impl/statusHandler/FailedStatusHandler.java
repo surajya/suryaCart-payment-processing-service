@@ -2,7 +2,7 @@ package com.payment.service.impl.statusHandler;
 
 import org.springframework.stereotype.Service;
 
-import com.payment.dao.interfaces.TransactionDao;
+import com.payment.dao.TransactionDao;
 import com.payment.dto.TransactionDTO;
 import com.payment.service.interfaces.TransactionStatusHandler;
 

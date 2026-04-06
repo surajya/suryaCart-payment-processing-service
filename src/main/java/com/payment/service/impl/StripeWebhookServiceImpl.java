@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.payment.constant.TransactionStatusEnum;
-import com.payment.dao.interfaces.TransactionDao;
+import com.payment.dao.TransactionDao;
 import com.payment.dto.TransactionDTO;
 import com.payment.dto.stripe.CheckOutSessionCompletedData;
 import com.payment.dto.stripe.StripeEventDTO;
