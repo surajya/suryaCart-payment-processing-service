@@ -2,7 +2,7 @@ package com.payment.repository;
 
 import com.payment.dto.TransactionDTO;
 
-public interface TransactionDao {
+public interface TransactionRepository {
 	
 	public abstract TransactionDTO createTransaction(TransactionDTO txnDTO);
 	
