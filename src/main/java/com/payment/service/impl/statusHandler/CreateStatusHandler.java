@@ -2,9 +2,9 @@ package com.payment.service.impl.statusHandler;
 
 import org.springframework.stereotype.Service;
 
-import com.payment.dao.TransactionDao;
 import com.payment.dto.TransactionDTO;
-import com.payment.service.interfaces.TransactionStatusHandler;
+import com.payment.repository.TransactionDao;
+import com.payment.service.TransactionStatusHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

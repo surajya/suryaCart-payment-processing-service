@@ -1,4 +1,4 @@
-package com.payment.pojo;
+package com.payment.entity;
 
 import java.util.List;
 

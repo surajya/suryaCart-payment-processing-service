@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payment.dto.InitiatePaymentDTO;
 import com.payment.dto.TransactionDTO;
-import com.payment.pojo.CreatePaymentRequest;
-import com.payment.pojo.CreatePaymentResponse;
-import com.payment.pojo.InitPaymentResponse;
-import com.payment.pojo.InitiatePaymentReq;
-import com.payment.service.interfaces.PaymentService;
+import com.payment.entity.CreatePaymentRequest;
+import com.payment.entity.CreatePaymentResponse;
+import com.payment.entity.InitPaymentResponse;
+import com.payment.entity.InitiatePaymentReq;
+import com.payment.service.PaymentService;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.payment.dto.stripe.StripeEventDTO;
-import com.payment.pojo.stripe.StripeEvent;
-import com.payment.service.interfaces.StripeWebhookService;
+import com.payment.entity.stripe.StripeEvent;
+import com.payment.service.StripeWebhookService;
 import com.stripe.net.Webhook;
 
 import lombok.RequiredArgsConstructor;

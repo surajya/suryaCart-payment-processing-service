@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.payment.constant.TransactionStatusEnum;
-import com.payment.dao.TransactionDao;
 import com.payment.dto.TransactionDTO;
 import com.payment.dto.stripe.CheckOutSessionCompletedData;
 import com.payment.dto.stripe.StripeEventDTO;
-import com.payment.service.interfaces.PaymentStatusService;
-import com.payment.service.interfaces.StripeWebhookService;
+import com.payment.repository.TransactionDao;
+import com.payment.service.PaymentStatusService;
+import com.payment.service.StripeWebhookService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

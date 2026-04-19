@@ -9,7 +9,6 @@ import com.payment.service.impl.statusHandler.FailedStatusHandler;
 import com.payment.service.impl.statusHandler.InitiatedStatusHandler;
 import com.payment.service.impl.statusHandler.PendingStatusHandler;
 import com.payment.service.impl.statusHandler.SuccessStatusHandler;
-import com.payment.service.interfaces.TransactionStatusHandler;
 
 import lombok.extern.slf4j.Slf4j;
 

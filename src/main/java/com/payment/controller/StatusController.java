@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.payment.pojo.activemq.StatusMessage;
+import com.payment.entity.activemq.StatusMessage;
 import com.payment.service.impl.activemq.StatusMessageProducer;
 
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.payment.constant.ErrorCodeEnum;
-import com.payment.pojo.ErrorRes;
+import com.payment.entity.ErrorRes;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.payment.service.interfaces;
+package com.payment.service;
 
 import com.payment.dto.stripe.StripeEventDTO;
 
