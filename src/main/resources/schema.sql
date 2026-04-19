@@ -1,55 +1,55 @@
 -- Drop schema (PostgreSQL doesn't use DROP DATABASE like this in scripts)
-DROP SCHEMA IF EXISTS payments CASCADE;
+--DROP SCHEMA IF EXISTS payments CASCADE;
 
 -- Create schema
-CREATE SCHEMA payments;
+--CREATE SCHEMA payments;
 
 -- Create user
-DO $$
-BEGIN
-   IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'payments') THEN
-      CREATE USER payments WITH PASSWORD 'cptraining';
-   END IF;
-END
-$$;
+--DO $$
+--BEGIN
+--   IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'payments') THEN
+--      CREATE USER payments WITH PASSWORD 'cptraining';
+--   END IF;
+--END
+--$$;
 
 -- Grant privileges
-GRANT ALL PRIVILEGES ON SCHEMA payments TO payments;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA payments TO payments;
+--GRANT ALL PRIVILEGES ON SCHEMA payments TO payments;
+--GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA payments TO payments;
 
 ---------------------------------------------------
 -- Tables
 ---------------------------------------------------
 
-CREATE TABLE payments.payment_method (
+CREATE TABLE IF NOT EXISTS payments.payment_method (
     id INT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     status SMALLINT DEFAULT 1,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE payments.payment_type (
+CREATE TABLE IF NOT EXISTS payments.payment_type (
     id INT PRIMARY KEY,
     type VARCHAR(100) NOT NULL,
     status SMALLINT DEFAULT 1,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE payments.provider (
+CREATE TABLE IF NOT EXISTS payments.provider (
     id INT PRIMARY KEY,
     provider_name VARCHAR(100) NOT NULL,
     status SMALLINT DEFAULT 1,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE payments.transaction_status (
+CREATE TABLE IF NOT EXISTS payments.transaction_status (
     id INT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     status SMALLINT DEFAULT 1,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE payments.transactions (
+CREATE TABLE IF NOT EXISTS payments.transactions (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     payment_method_id INT NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE payments.transactions (
         REFERENCES payments.payment_type(id)
 );
 
-CREATE TABLE payments.transaction_log (
+CREATE TABLE IF NOT EXISTS payments.transaction_log (
     id SERIAL PRIMARY KEY,
     transaction_id INT NOT NULL,
     txn_from_status VARCHAR(50) DEFAULT '-1',

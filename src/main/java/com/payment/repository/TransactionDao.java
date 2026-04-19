@@ -1,4 +1,4 @@
-package com.payment.dao;
+package com.payment.repository;
 
 import com.payment.dto.TransactionDTO;
 

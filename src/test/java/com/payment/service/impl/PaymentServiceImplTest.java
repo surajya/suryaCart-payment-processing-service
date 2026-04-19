@@ -20,14 +20,14 @@ import org.springframework.http.ResponseEntity;
 import com.google.gson.Gson;
 import com.payment.constant.ErrorCodeEnum;
 import com.payment.constant.TransactionStatusEnum;
-import com.payment.dao.TransactionDao;
 import com.payment.dto.InitiatePaymentDTO;
 import com.payment.dto.PaymentResDTO;
 import com.payment.dto.TransactionDTO;
 import com.payment.exception.ProcessingException;
 import com.payment.http.HttpServiceEngine;
+import com.payment.repository.TransactionDao;
+import com.payment.service.PaymentStatusService;
 import com.payment.service.impl.PaymentServiceImpl;
-import com.payment.service.interfaces.PaymentStatusService;
 import com.payment.stripeprovider.PaymentRes;
 import com.payment.util.GsonUtils;
 

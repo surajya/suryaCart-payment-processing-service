@@ -1,4 +1,4 @@
-package com.payment.pojo.stripe;
+package com.payment.entity.stripe;
 
 import com.google.gson.JsonObject;
 

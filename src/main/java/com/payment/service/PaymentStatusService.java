@@ -1,9 +1,8 @@
-package com.payment.service.interfaces;
+package com.payment.service;
 
 import com.payment.dto.TransactionDTO;
 
-public interface TransactionStatusHandler {
-
+public interface PaymentStatusService {
+	
 	public TransactionDTO processStatus(TransactionDTO transactionDTO);
-
 }

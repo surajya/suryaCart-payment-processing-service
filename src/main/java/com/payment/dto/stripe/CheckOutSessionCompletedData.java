@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-
 public class CheckOutSessionCompletedData {
 
 	private String id;

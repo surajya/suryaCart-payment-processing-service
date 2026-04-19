@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import com.payment.constant.TransactionStatusEnum;
 import com.payment.dto.TransactionDTO;
 import com.payment.service.PaymentStatusFactory;
-import com.payment.service.interfaces.PaymentStatusService;
-import com.payment.service.interfaces.TransactionStatusHandler;
+import com.payment.service.PaymentStatusService;
+import com.payment.service.TransactionStatusHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

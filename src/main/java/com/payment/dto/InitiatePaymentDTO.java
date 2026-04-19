@@ -2,7 +2,7 @@ package com.payment.dto;
 
 import java.util.List;
 
-import com.payment.pojo.Item;
+import com.payment.entity.Item;
 
 import lombok.Data;
 
