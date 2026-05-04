@@ -1,4 +1,4 @@
-package com.payment.repository.impl;
+package com.payment.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.payment.dto.TransactionDTO;
 import com.payment.entity.TransactionsEntity;
-import com.payment.repository.TransactionDao;
+import com.payment.repository.TransactionRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class TransactionDaoImpl implements TransactionDao {
+public class TransactionService implements TransactionRepository {
 
 	private final ModelMapper mapper;
 
