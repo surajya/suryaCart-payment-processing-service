@@ -26,6 +26,7 @@ import com.payment.dto.TransactionDTO;
 import com.payment.exception.ProcessingException;
 import com.payment.http.HttpServiceEngine;
 import com.payment.service.PaymentStatusService;
+import com.payment.service.TransactionService;
 import com.payment.stripeprovider.PaymentRes;
 import com.payment.util.GsonUtils;
 
@@ -42,7 +43,6 @@ public class PaymentServiceImplTest {
 	private HttpServiceEngine httpServiceEngine;
 	@Mock
 	private Gson gson;
-
 	@Mock
 	private TransactionService transactionService;
 	@Mock

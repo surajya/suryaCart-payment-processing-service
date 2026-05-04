@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.payment.dto.TransactionDTO;
 import com.payment.entity.activemq.StatusMessage;
+import com.payment.service.TransactionService;
 import com.payment.service.TransactionStatusHandler;
-import com.payment.service.impl.TransactionService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
