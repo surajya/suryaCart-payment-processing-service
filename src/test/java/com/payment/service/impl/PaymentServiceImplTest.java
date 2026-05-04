@@ -25,7 +25,6 @@ import com.payment.dto.PaymentResDTO;
 import com.payment.dto.TransactionDTO;
 import com.payment.exception.ProcessingException;
 import com.payment.http.HttpServiceEngine;
-import com.payment.repository.TransactionRepository;
 import com.payment.service.PaymentStatusService;
 import com.payment.stripeprovider.PaymentRes;
 import com.payment.util.GsonUtils;
@@ -45,7 +44,7 @@ public class PaymentServiceImplTest {
 	private Gson gson;
 
 	@Mock
-	private TransactionRepository transactionRepository;
+	private TransactionService transactionService;
 	@Mock
 	private ModelMapper modelMapper;
 	@Mock
@@ -103,7 +102,7 @@ public class PaymentServiceImplTest {
 		InitiatePaymentDTO reqDTO = new InitiatePaymentDTO();
 
 		TransactionDTO txnDTO = new TransactionDTO();
-		when(transactionRepository.getTransactionByReference(txnReference)).thenReturn(txnDTO);
+		when(transactionService.getTransactionByReference(txnReference)).thenReturn(txnDTO);
 
 		ResponseEntity<String> httpResponse =
 				new ResponseEntity<>("Resource created successfully", HttpStatus.CREATED);;
