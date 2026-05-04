@@ -17,10 +17,11 @@ public class TransactionStatus {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
 
-	@Column(name = "status")
-	public String status;
+	@Column(name = "name")
+	public String name;
 
-	public int statusCode;
+	@Column(name = "status")
+	public char statusCode;
 
 	@Column(name = "creation_date")
 	public LocalDateTime createdAt;

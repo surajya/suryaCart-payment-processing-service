@@ -25,6 +25,7 @@ import com.payment.http.HttpRequest;
 import com.payment.http.HttpServiceEngine;
 import com.payment.service.PaymentService;
 import com.payment.service.PaymentStatusService;
+import com.payment.service.TransactionService;
 import com.payment.stripeprovider.CreatePaymentReq;
 import com.payment.stripeprovider.LineItems;
 import com.payment.stripeprovider.PaymentRes;
@@ -57,7 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
 		//Make complete transactiondto first
 		transactionDTO.setTxnStatus(TransactionStatusEnum.CREATED.getName());
 
-		transactionDTO.setTxnReference(getTransactionReference());
+		transactionDTO.setTxnReference(createTransactionReference());
 
 
 		//Logic to save transactionDTO in DB with status: Created;
@@ -68,7 +69,7 @@ public class PaymentServiceImpl implements PaymentService {
 		return txnDTO;
 	}
 
-	public String getTransactionReference() {
+	private String createTransactionReference() {
 		String transactionReference = UUID.randomUUID().toString();
 		log.info("Create transaction reference, txnReference=" + transactionReference);
 		return transactionReference;

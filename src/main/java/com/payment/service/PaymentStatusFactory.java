@@ -17,31 +17,30 @@ import lombok.extern.slf4j.Slf4j;
 public class PaymentStatusFactory {
 
 	private ApplicationContext context;
-	
+
 	PaymentStatusFactory(ApplicationContext context) {
-		this.context =context;
+		this.context = context;
 	}
-	
+
 	public TransactionStatusHandler getHandler(TransactionStatusEnum statusEnum) {
-		
+
 		switch (statusEnum) {
-		
-		case CREATED:
-			return context.getBean(CreateStatusHandler.class);
-			
-			
-		case INITIATED:
-			return context.getBean(InitiatedStatusHandler.class);
-		case PENDING:
-			
-			return context.getBean(PendingStatusHandler.class);
-		case SUCCESS:
-			return context.getBean(SuccessStatusHandler.class);
-		case FAILED:
-			return context.getBean(FailedStatusHandler.class);
-		
+			case CREATED:
+				return context.getBean(CreateStatusHandler.class);
+
+			case INITIATED:
+				return context.getBean(InitiatedStatusHandler.class);
+
+			case PENDING:
+				return context.getBean(PendingStatusHandler.class);
+
+			case SUCCESS:
+				return context.getBean(SuccessStatusHandler.class);
+
+			case FAILED:
+				return context.getBean(FailedStatusHandler.class);
 		}
-		
+
 		log.info("statusEnum is not handled || statusEnum:{}", statusEnum);
 		return null;
 	}
