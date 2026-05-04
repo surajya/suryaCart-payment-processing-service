@@ -1,16 +1,23 @@
 package com.payment.repository;
 
-import com.payment.dto.TransactionDTO;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TransactionRepository {
+import com.payment.entity.TransactionsEntity;
 
-	public abstract TransactionDTO createTransaction(TransactionDTO txnDTO);
+@Repository
+public interface TransactionRepository extends JpaRepository<TransactionsEntity, Integer> {
 
-	public abstract TransactionDTO getTransactionByReference(String txnReference);
+	//	public abstract TransactionDTO createTransaction(TransactionDTO txnDTO);
+	//
+	//	public abstract TransactionDTO getTransactionByReference(String txnReference);
+	//
+	//	public abstract TransactionDTO updateTransactionStatusDetails(TransactionDTO txnDto);
+	//
+	//	public abstract TransactionDTO getTransactionByProviderReference(String providerReference);
 
-	public abstract TransactionDTO updateTransactionStatusDetails(TransactionDTO txnDto);
+	public abstract TransactionsEntity findBytxnReference(String txnReference);
 
-	public abstract TransactionDTO getTransactionByProviderReference(String providerReference);
-
+	public abstract TransactionsEntity findByproviderReference(String providerReference);
 
 }

@@ -7,7 +7,6 @@ import com.payment.constant.TransactionStatusEnum;
 import com.payment.dto.TransactionDTO;
 import com.payment.dto.stripe.CheckOutSessionCompletedData;
 import com.payment.dto.stripe.StripeEventDTO;
-import com.payment.repository.TransactionRepository;
 import com.payment.service.PaymentStatusService;
 import com.payment.service.StripeWebhookService;
 
@@ -29,7 +28,7 @@ public class StripeWebhookServiceImpl implements StripeWebhookService {
 
 	private final Gson gson;
 	private final PaymentStatusService paymentStatusService;
-	private final TransactionRepository transactionRepository;
+	private final TransactionService transactionService;
 
 	@Override
 	public String processEvent(StripeEventDTO stripeEventDTO) {
@@ -73,7 +72,7 @@ public class StripeWebhookServiceImpl implements StripeWebhookService {
 			log.info("Payment is completed successfully.");
 
 			String providerReference = objData.getId();
-			TransactionDTO txnDTO = transactionRepository.getTransactionByProviderReference(providerReference);
+			TransactionDTO txnDTO = transactionService.getTransactionByProviderReference(providerReference);
 
 			if (txnDTO == null) {
 				log.warn("No TransactionDTO found for ProviderReference: {}", providerReference);
@@ -97,7 +96,7 @@ public class StripeWebhookServiceImpl implements StripeWebhookService {
 		log.warn("Received async payment failure event. Data: {}", objData);
 
 		String providerReference = objData.getId();
-		TransactionDTO txnDTO = transactionRepository.getTransactionByProviderReference(providerReference);
+		TransactionDTO txnDTO = transactionService.getTransactionByProviderReference(providerReference);
 
 		if (txnDTO == null) {
 			log.warn("No TransactionDTO found for ProviderReference: {}", providerReference);

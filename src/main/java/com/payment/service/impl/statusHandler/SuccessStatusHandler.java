@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.payment.dto.TransactionDTO;
 import com.payment.entity.activemq.StatusMessage;
-import com.payment.repository.TransactionRepository;
 import com.payment.service.TransactionStatusHandler;
+import com.payment.service.impl.TransactionService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class SuccessStatusHandler implements TransactionStatusHandler {
 
-	private final TransactionRepository transactionRepository;
+	private final TransactionService transactionService;
 	private static final String QUEUE_NAME = "status.queue";
 
 
@@ -34,7 +34,7 @@ public class SuccessStatusHandler implements TransactionStatusHandler {
 		String txnStatus = transactionDTO.getTxnStatus();
 		log.info("Processing SUCCESS status||txnDto:" + transactionDTO);
 
-		transactionRepository.updateTransactionStatusDetails(transactionDTO);
+		transactionService.updateTransactionStatusDetails(transactionDTO);
 
 		log.info("Updated Txn in DB||txnDto:" + transactionDTO);
 

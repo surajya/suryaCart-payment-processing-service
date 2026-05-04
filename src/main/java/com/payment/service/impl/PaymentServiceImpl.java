@@ -23,7 +23,6 @@ import com.payment.dto.TransactionDTO;
 import com.payment.exception.ProcessingException;
 import com.payment.http.HttpRequest;
 import com.payment.http.HttpServiceEngine;
-import com.payment.repository.TransactionRepository;
 import com.payment.service.PaymentService;
 import com.payment.service.PaymentStatusService;
 import com.payment.stripeprovider.CreatePaymentReq;
@@ -44,7 +43,7 @@ public class PaymentServiceImpl implements PaymentService {
 	private final HttpServiceEngine httpServiceEngine;
 	private final Gson gson;
 
-	private final TransactionRepository transactionRepository;
+	private final TransactionService transactionService;
 	private final ModelMapper modelMapper;
 	private final GsonUtils gsonUtils;
 
@@ -81,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService {
 				txnReference, reqDto);
 
 		// Load Txn from DB based on txnReference.
-		TransactionDTO txnDTO = transactionRepository.getTransactionByReference(txnReference);
+		TransactionDTO txnDTO = transactionService.getTransactionByReference(txnReference);
 		log.info("txnDto from DB:" + txnDTO);
 
 		if (txnDTO == null) {

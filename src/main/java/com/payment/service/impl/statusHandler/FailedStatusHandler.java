@@ -3,8 +3,8 @@ package com.payment.service.impl.statusHandler;
 import org.springframework.stereotype.Service;
 
 import com.payment.dto.TransactionDTO;
-import com.payment.repository.TransactionRepository;
 import com.payment.service.TransactionStatusHandler;
+import com.payment.service.impl.TransactionService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class FailedStatusHandler implements TransactionStatusHandler {
 
-	private final TransactionRepository transactionRepository;
+	private final TransactionService transactionService;
 
 	@Override
 	public TransactionDTO processStatus(TransactionDTO txnDto) {
@@ -23,7 +23,7 @@ public class FailedStatusHandler implements TransactionStatusHandler {
 
 		log.info("Processing FAILED status||txnDto:" + txnDto);
 
-		transactionRepository.updateTransactionStatusDetails(txnDto);
+		transactionService.updateTransactionStatusDetails(txnDto);
 
 		log.info("Updated Txn in DB||txnDto:" + txnDto);
 
